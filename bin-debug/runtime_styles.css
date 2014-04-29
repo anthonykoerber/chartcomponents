@@ -1,0 +1,89 @@
+/* CSS file */
+/*
+//------------------------------
+//  fonts
+//------------------------------
+*/
+
+@font-face 
+{
+    src: url("../assets/fonts/GGSUBSCR.TTF"); 
+    fontFamily: Subscript;
+    font-style: normal;
+    fontWeight: normal;
+	embed-as-cff:true;
+}
+@font-face 
+{
+	src: url("../assets/fonts/GGSUPERS.TTF"); 
+    fontFamily: Superscript;
+    font-style: normal;
+    fontWeight: normal;
+	embed-as-cff:true;
+}
+
+@font-face {
+    src: url("../assets/fonts/arial.ttf");
+    fontFamily: ArialEmbed;
+    font-style: normal;
+    fontWeight: normal;
+	embed-as-cff:true;
+}
+
+@font-face {
+    src: url("../assets/fonts/arialbd.ttf");
+    fontFamily: ArialEmbed;
+    font-style: normal;
+    fontWeight: bold;
+	embed-as-cff:true;
+}
+
+@font-face {
+    src: url("../assets/fonts/ariali.ttf");
+    fontFamily: ArialEmbed;
+    font-style: italic;
+    fontWeight: normal;
+	embed-as-cff:true;
+}
+
+@font-face {
+    src: url("../assets/fonts/arialbi.ttf");
+    fontFamily: ArialEmbed;
+    font-style: italic;
+    fontWeight: bold;
+	embed-as-cff:true;
+}
+
+@font-face {
+	src: url("../assets/fonts/FSJoey-Regular.ttf");
+	fontFamily: FSJoeyEmbed;
+	font-style: normal;
+	fontWeight: normal;
+	embed-as-cff:true;
+}
+
+@font-face {
+	src: url("../assets/fonts/FSJoey-Bold.ttf");
+	fontFamily: FSJoeyEmbed;
+	font-style: normal;
+	fontWeight: bold;
+	embed-as-cff:true;
+}
+
+/*
+//------------------------------
+//  Application
+//------------------------------
+*/
+
+Application
+{
+	font-family: ArialEmbed;
+	font-size: 11pt;
+	font-weight: normal;
+	font-style: normal;
+	leading: 2;
+	font-anti-alias-type: advanced;
+	font-grid-fit-type: subpixel;
+	letter-spacing: 0.5;
+}

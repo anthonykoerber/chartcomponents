@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" minHeight="600" 
+			   creationComplete="init()"
+			   xmlns:stackchart="com.charts.stackchart.*"
+			   xmlns:serieschart="com.charts.serieschart.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.charts.comparechart.CompareChartComponent;
+			import com.charts.serieschart.SeriesChartComponent;
+			
+			import mx.core.FlexGlobals;
+			
+			[Embed(source="../assets/fonts/arial.ttf", fontFamily="ArialEmbed", fontWeight="normal", mimeType='application/x-font', embedAsCFF='false')]
+			private var ArialFontRegular:Class;
+			
+			[Embed(source="../assets/fonts/arialbd.ttf", fontFamily="ArialEmbed", fontWeight="bold", mimeType='application/x-font', embedAsCFF='false')]
+			private var ArialFontBold:Class;
+			
+			private var seriesComponent:SeriesChartComponent;
+			
+			[Bindable]
+			private var stackData:Object = new Object();
+			private var stackSegments:Array = new Array(
+				{ id:3, myDollars:10000,  	myColor:0x2b6b6b, legendLabel:"Base Salary",  		fullLabel:"Base Salary", 		panelType:null, useAltLabel:false },
+				{ id:2, myDollars:9000,  	myColor:0x3ea2a2, legendLabel:"Variable Pay", 		fullLabel:"Variable Pay", 		panelType:null,	useAltLabel:false },
+				{ id:1, myDollars:8000,     myColor:0x42cacc, legendLabel:"Commissions",  		fullLabel:"Commissions",  		panelType:null,	useAltLabel:false },
+				{ id:0, myDollars:7000,   	myColor:0x41eced, legendLabel:"Overtime Earnings", 	fullLabel:"Overtime Earnings", 	panelType:null, useAltLabel:false });
+			
+			[Bindable]
+			private var seriesData:Object = new Object();
+			private var seriesSegments:Array = new Array(
+				{ age:35, dollars:49000 },
+				{ age:36, dollars:51000 },
+				{ age:37, dollars:53000 },
+				{ age:38, dollars:55000 },
+				{ age:39, dollars:57000 },
+				{ age:40, dollars:59000 },
+				{ age:41, dollars:61000 },
+				{ age:42, dollars:63000 },
+				{ age:43, dollars:65000 },
+				{ age:44, dollars:67000 },
+				{ age:45, dollars:69000 },
+				{ age:46, dollars:71000 },
+				{ age:47, dollars:73000 },
+				{ age:48, dollars:75000 },
+				{ age:49, dollars:77000 },
+				{ age:50, dollars:79000 },
+				{ age:51, dollars:81000 },
+				{ age:52, dollars:83000 },
+				{ age:53, dollars:85000 },
+				{ age:54, dollars:89000 },
+				{ age:55, dollars:91000 },
+				{ age:56, dollars:93000 },
+				{ age:57, dollars:95000 },
+				{ age:58, dollars:97000 },
+				{ age:59, dollars:99000 });
+			
+			/*
+			private var seriesSegments:Array = new Array(
+				{age:'30', dollars:50000},
+				{age:'31', dollars:51000},
+				{age:'32', dollars:52000},
+				{age:'33', dollars:53000},
+				{age:'34', dollars:54000},
+				{age:'35', dollars:55000},
+				{age:'36', dollars:56000},
+				{age:'37', dollars:57000},
+				{age:'38', dollars:58000},
+				{age:'39', dollars:59000},
+				{age:'40', dollars:60000},
+				{age:'41', dollars:61000},
+				{age:'42', dollars:62000},
+				{age:'43', dollars:63000},
+				{age:'44', dollars:64000},
+				{age:'45', dollars:65000},
+				{age:'46', dollars:66000},
+				{age:'47', dollars:67000},
+				{age:'48', dollars:68000},
+				{age:'49', dollars:69000},
+				{age:'50', dollars:70000},
+				{age:'51', dollars:71000},
+				{age:'52', dollars:72000},
+				{age:'53', dollars:73000},
+				{age:'54', dollars:74000},
+				{age:'55', dollars:75000},
+				{age:'56', dollars:76000},
+				{age:'57', dollars:77000},
+				{age:'58', dollars:78000},
+				{age:'59', dollars:79000},
+				{age:'60', dollars:80000},
+				{age:'61', dollars:81000},
+				{age:'62', dollars:82000},
+				{age:'63', dollars:83000},
+				{age:'64', dollars:84000},
+				{age:'65', dollars:85000},
+				{age:'66', dollars:86000},
+				{age:'67', dollars:87000},
+				{age:'68', dollars:88000},
+				{age:'69', dollars:89000},
+				{age:'70', dollars:90000},
+				{age:'71', dollars:91000},
+				{age:'72', dollars:92000},
+				{age:'73', dollars:93000},
+				{age:'74', dollars:94000},
+				{age:'75', dollars:95000});
+			*/
+			
+			[Bindable]
+			private var compareData:Object = new Object();
+			
+			// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+			
+			private function init():void {
+				generateStackChart();
+				generateSeriesChart();
+				generateCompareChart();
+			}
+			
+			private function generateStackChart():void{
+				stackData.chart = new Object();
+				stackData.chart.chartName = "Your Total Cash Compensation";
+				stackData.chart.chartVals = stackSegments;
+				stackComponent.setupGraph();
+			}
+			
+			private function generateSeriesChart():void{
+				seriesData.chart = new Object();
+				seriesData.chart.chartName = "Series Chart";
+				seriesData.chart.chartVals = seriesSegments;
+				
+				seriesComponent = new SeriesChartComponent();
+				seriesComponent.myRoot =     FlexGlobals.topLevelApplication;
+				seriesComponent.myData =     seriesData;
+				seriesComponent.chartWidth = seriesHolder1.width;
+				seriesComponent.chartHeight= seriesHolder1.height;
+				seriesComponent.numLabelsX = 5;
+				seriesComponent.numLabelsY = 5;
+				seriesComponent.startValX =  seriesData.chart.chartVals[0].age;
+				seriesComponent.endValX =    seriesData.chart.chartVals[seriesData.chart.chartVals.length - 1].age;
+				seriesComponent.startValY =  0;
+				seriesComponent.endValY=     seriesData.chart.chartVals[seriesData.chart.chartVals.length - 1].dollars;
+				seriesComponent.barColor1 =  0x72a026;
+				seriesComponent.barColor2 =  0x90e405;
+				seriesComponent.animTime =   0.5;
+				seriesComponent.delayTime =  0.05;
+				
+				seriesHolder1.addElement(seriesComponent);
+				seriesComponent.setupGraph();
+			}
+
+			private function generateCompareChart():void{
+				compareData.assets = 50000;
+				compareData.needs = 100000;
+				compareData.largestNumber = 100000;
+				
+				var compareComponent:CompareChartComponent = new CompareChartComponent();
+				compareComponent.myRoot =     FlexGlobals.topLevelApplication;
+				compareComponent.myData =     compareData;
+				compareComponent.chartWidth = compareHolder1.width;
+				compareComponent.chartHeight= compareHolder1.height;
+				compareComponent.bar1Color1 = 0x72a026;
+				compareComponent.bar1Color2 = 0x90e405;
+				compareComponent.bar2Color1 = 0x00467d;
+				compareComponent.bar2Color2 = 0x0078b2
+				compareComponent.animTime =   1.0;
+				compareComponent.delayTime =  1.0;
+				
+				compareHolder1.addElement(compareComponent);
+				compareComponent.setupGraph();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- <fx:Style source="runtime_styles.css"/> -->
+	
+	<s:Group left="50" right="50" top="50" bottom="50">
+		<s:layout>
+			<s:VerticalLayout gap="50"/>
+		</s:layout>
+		
+
+		<stackchart:StackChartComponent
+			id="stackComponent"
+			myRoot="{ FlexGlobals.topLevelApplication }"
+			myData="{ stackData }"
+			chartWidth="285"
+			chartHeight="235"
+			pieceWidth="94"
+			pieceDepth="15"
+			legendBoxSize="10"
+			legendTextSize="11"
+			legendPadding="2"
+			transTime="0.7"
+			titleTextSize="14"
+			themeColor="{0xe9e9e9}"
+			legendTextColor="{0x000000}"
+			titleTextColor="{0x666666}"
+			useBgGfx="false"
+			useAnimation="true"
+			useDollarsLegend="false"
+			useTitlePanel="true"
+			legendLocation="{'right'}"
+			enableChartRollover="true"
+			enableLegendRollover="false"
+			/>
+		
+		<s:Group
+			id="seriesHolder1"
+			width="400" height="150">
+			
+		</s:Group>
+		
+		<s:Group
+			id="compareHolder1"
+			width="400" height="240">
+			
+		</s:Group>
+		
+	</s:Group>
+	
+</s:Application>
